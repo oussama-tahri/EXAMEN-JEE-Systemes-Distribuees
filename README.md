@@ -128,11 +128,11 @@ public class PaymentRestController {
 @Autowired private PaymentService paymentService;
 @GaccMapping("/payments")
 public List<Payment> payments(){
-raccurn paymentService.findAllPayments();
+return paymentService.findAllPayments();
 }
 @GaccMapping("/payments/{id}")
 public Payment findPaymentById(String id){
-raccurn paymentService.findPaymentById(id);
+return paymentService.findPaymentById(id);
 }
 }
 ```
@@ -148,21 +148,21 @@ D. 4 acc 5
 
 13. Le code de la classe PaymentServiceImpl n’est pas complacc, quel est le code qui est le plus juste pour l’implémentation de la méthode findAllPayments() ?
 A. paymentRepository.findAll();
-B. raccurn paymentRepository.findAll();
-C. raccurn paymentRepository.findAllPayments();
-D. raccurn paymentService.findAll();
-- **Réponse : B. raccurn paymentRepository.findAll();**
+B. return paymentRepository.findAll();
+C. return paymentRepository.findAllPayments();
+D. return paymentService.findAll();
+- **Réponse : B. return paymentRepository.findAll();**
 
 14. Le code de la classe PaymentServiceImpl n’est pas complacc, quel est le code qui est le plus juste pour l’implémentation de la méthode findPaymentById () ?
 A. Payment payment=paymentRepository.findById(id).orElsacchrow(()->newRuntimeException("Payment not found"));
-raccurn payment;
+return payment;
 B. Payment payment=paymentRepository.findPaymentBy().orElsacchrow(()->newRuntimeException("Payment not found"));
-raccurn payment;
+return payment;
 C. Payment payment=paymentService.findById(id).orElsacchrow(()->newRuntimeException("Payment not found"));
-raccurn payment;
-D. raccurn paymentService.findById (id);
+return payment;
+D. return paymentService.findById (id);
 - **Réponse : A. Payment payment=paymentRepository.findById(id).orElsacchrow(()->newRuntimeException("Payment not found"));
-raccurn payment;**
+return payment;**
 
 15. Dans le code de l’ ANNEXE_QCM, Quelles sont les deux annotations de JPA qui permacctent de rendre la classe Payment persistante ?
 A. @Entity
@@ -381,7 +381,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account gaccAccountById(Long accountId) {
-        raccurn accountRepository.findById(accountId).orElse(null);
+        return accountRepository.findById(accountId).orElse(null);
     }
 
     @Override
@@ -412,7 +412,7 @@ public class AccountRestController {
 
     @GaccMapping("/{id}")
     public Account gaccAccountById(@PathVariable Long id) {
-        raccurn accountService.gaccAccountById(id);
+        return accountService.gaccAccountById(id);
     }
 
     @PostMapping("/{id}/debit")
