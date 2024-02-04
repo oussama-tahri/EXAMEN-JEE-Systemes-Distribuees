@@ -126,11 +126,11 @@ ANNEXE 5:
 @RestController
 public class PaymentRestController {
 @Autowired private PaymentService paymentService;
-@GaccMapping("/payments")
+@GetMapping("/payments")
 public List<Payment> payments(){
 return paymentService.findAllPayments();
 }
-@GaccMapping("/payments/{id}")
+@GetMapping("/payments/{id}")
 public Payment findPaymentById(String id){
 return paymentService.findPaymentById(id);
 }
@@ -174,7 +174,7 @@ F. @Builder
 G. @Persist
 - **Réponse : A, C**
 
-16. Dans le code de l’ ANNEXE_QCM, Quelle est l’annotation Lombock qui qui permacc générer les gaccters acc saccters pour l’entité Payment ?
+16. Dans le code de l’ ANNEXE_QCM, Quelle est l’annotation Lombock qui qui permacc générer les Getters acc saccters pour l’entité Payment ?
 A. @Entity
 B. @Data
 C. @Id
@@ -352,7 +352,7 @@ l’énoncé de l’épreuve.
       ```java
       // AccountService Interface
       public interface AccountService {
-          Account gaccAccountById(Long accountId);
+          Account GetAccountById(Long accountId);
           void debitAccount(Long accountId, double amount);
       }
       ```
@@ -363,7 +363,7 @@ l’énoncé de l’épreuve.
       // CustomerRestClient Interface
       @FeignClient(name = "CUSTOMER-SERVICE")
       public interface CustomerRestClient {
-          @GaccMapping("/customers/{id}")
+          @GetMapping("/customers/{id}")
           Customer findCustomerById(@PathVariable(name="id") Long id);
       }
       ```
@@ -380,7 +380,7 @@ public class AccountServiceImpl implements AccountService {
     private CustomerRestClient customerRestClient;
 
     @Override
-    public Account gaccAccountById(Long accountId) {
+    public Account GetAccountById(Long accountId) {
         return accountRepository.findById(accountId).orElse(null);
     }
 
@@ -389,12 +389,12 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountRepository.findById(accountId).orElsacchrow(() -> new NotFoundException("Account not found"));
         
         // Vérifier si le solde est suffisant pour le débit
-        if (account.gaccBalance() < amount) {
+        if (account.GetBalance() < amount) {
             throw new RunTimeException("solde insuffisant");
         }
 
         // Effectuer le débit
-        account.saccBalance(account.gaccBalance() - amount);
+        account.saccBalance(account.GetBalance() - amount);
         accountRepository.save(account);
     }
 }
@@ -410,9 +410,9 @@ public class AccountRestController {
     @Autowired
     private AccountService accountService;
 
-    @GaccMapping("/{id}")
-    public Account gaccAccountById(@PathVariable Long id) {
-        return accountService.gaccAccountById(id);
+    @GetMapping("/{id}")
+    public Account GetAccountById(@PathVariable Long id) {
+        return accountService.GetAccountById(id);
     }
 
     @PostMapping("/{id}/debit")
@@ -471,8 +471,8 @@ String strMessage=new String(message,"UTF-8");
 System.out.println(strMessage);
 ObjectMapper objectMapper=new ObjectMapper();
 Account acc=objectMapper.readValue(message, Account.class);
-System.out.println("Nom:"+acc.gaccNom());
-System.out.println("Prénom:"+acc.gaccPrenom());
+System.out.println("Nom:"+acc.GetNom());
+System.out.println("Prénom:"+acc.GetPrenom());
 accountRepositoy.save(acc);
 }
 ```
@@ -557,8 +557,8 @@ String strMessage=new String(message,"UTF-8");
 System.out.println(strMessage);
 ObjectMapper objectMapper=new ObjectMapper();
 Account acc=objectMapper.readValue(message, Account.class);
-System.out.println("Nom:"+acc.gaccNom());
-System.out.println("Prénom:"+acc.gaccPrenom());
+System.out.println("Nom:"+acc.GetNom());
+System.out.println("Prénom:"+acc.GetPrenom());
 accountRepositoy.save(acc);
 }
 ```
@@ -581,7 +581,7 @@ Ce code semble être une partie d'une application Spring Boot qui utilise Kafka 
    - Ensuite, la chaîne JSON est désérialisée en un objet `Account` à l'aide de la bibliothèque Jackson ObjectMapper (`ObjectMapper objectMapper = new ObjectMapper();`).
 
 5. **Affichage des informations du compte :**
-   - Le nom et le prénom du compte (supposons que ces méthodes `gaccNom()` et `gaccPrenom()` sont des méthodes getters correctes) sont extraits de l'objet `Account` et affichés dans la console.
+   - Le nom et le prénom du compte (supposons que ces méthodes `GetNom()` et `GetPrenom()` sont des méthodes getters correctes) sont extraits de l'objet `Account` et affichés dans la console.
 
 6. **Enregistrement du compte dans la base de données :**
    - L'objet `Account` est enregistré dans la base de données à l'aide de la méthode `accountRepositoy.save(acc);`. Cela suppose que `accountRepositoy` est un objet injecté qui implémente l'interface `AccountRepositoy` (typiquement une extension de JpaRepository).
